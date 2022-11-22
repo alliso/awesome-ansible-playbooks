@@ -1,0 +1,19 @@
+- name: Node and NVM installation
+  hosts: all
+  gather_facts: no
+  tasks:
+  - name: Update all packages
+    apt: update_cache=yes force_apt_get=yes
+    become: true
+
+  - name: Install dependencies
+    apt:
+      name:
+        - curl
+      state: present
+
+  - name: Install nvm
+    shell: curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash 
+
+  - name: Install node 18 LTS
+    shell: /bin/bash -c "source ~/.nvm/nvm.sh && nvm install v18.12.0"
